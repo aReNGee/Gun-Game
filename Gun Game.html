@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+#explanation {
+	position: absolute;
+	left: 800px;
+	top: 100px;
+	width: 400px;
+	border-style:solid;
+	border-radius:25px;
+	padding: 20px;
+}
+
+#parea{
+	height:600px;
+	width:600px;
+	background-color:gray;
+	border-style:solid;
+}
+.bullet{
+	position:absolute;
+	top: 500px;
+	height:16px;
+	width:16px;
+	background-color:black;
+}
+
+#one{
+	left: 650px;
+}
+
+#two{
+	left: 682px;
+}
+
+#three{
+	left: 714px;
+}
+#four{
+	left: 746px;
+}
+#five{
+	left: 778px;
+}
+#six{
+	left: 810px;
+}
+
+#clip {
+	position:absolute;
+	top: 460px;
+	left: 640px;
+	font-size: 26px;
+}
+
+#reloadbutton {
+	position:absolute;
+	top: 540px;
+	left: 700px;
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script>
+var reload = 6;
+var cBullet = 0;
+function shootgun(event){
+	var x = event.clientX;
+    var y = event.clientY;
+    var coords = "X coords: " + x + ", Y coords: " + y; //mouse x and y coordinates
+	
+    document.getElementById("parea").innerHTML = coords;
+	
+	if (cBullet < 6){
+		
+		switch(cBullet) { //figures out which bullet you're firing
+			case 0:
+				var fire = $("#one");
+			break;
+			case 1:
+				var fire = $("#two");
+			break;
+			case 2:
+				var fire = $("#three");
+			break;
+			case 3:
+				var fire = $("#four");
+			break;
+			case 4:
+				var fire = $("#five");
+			break;
+			case 5:
+				var fire = $("#six");
+			break;
+			default:
+			break;
+		}
+		cBullet++;
+	}
+	else {
+		alert("out of bullets"); //you need to reload
+	}
+	
+	fire.css("left", "300px"); //moves the bullet to the centere of the play area
+	fire.animate({top: y, left: x}, "slowest"); //fires the bullet
+}
+
+
+function newClip(){
+	cBullet = 0;
+	var x = document.getElementsByClassName("bullet"); //reloads the clip
+	var resetleft = 650;
+	
+	for (i = 0; i < x.length; i++) {
+		x[i].style.top = "500px";
+		x[i].style.left = resetleft + "px";
+		resetleft += 32;
+	}
+}
+
+</script>
+</head>
+<body>
+
+<div id="parea" onclick="shootgun(event);">Play area</div>
+<div id="clip">Remaining Bullets</div>
+<div class="bullet" id="one" ></div>
+<div class="bullet" id="two" ></div>
+<div class="bullet" id="three" ></div>
+<div class="bullet" id="four" ></div>
+<div class="bullet" id="five" ></div>
+<div class="bullet" id="six" ></div>
+<button id="reloadbutton" type="button" onclick="newClip()">Reload</button>
+
+<div id="explanation">
+<h2 style="text-align:center">GUN SIMULATOR</h2>
+<div>In this game you click on the grey shaded play area to fire bullets to your mouse location. You can fire up to six bullets before needing to reload. Your remaining bullets are displayed to the right of the play area. You can reload by clicking the "Reload" button, located underneath your remaining bullets.</div><br>
+<div style="text-align:center"> A game by Ivan Boyko and Eric Luong </div>
+</div>
+
+</body>
+</html>
